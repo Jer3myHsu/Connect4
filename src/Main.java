@@ -52,10 +52,10 @@ public class Main {
 			public void actionPerformed(ActionEvent e) {
 				InsertButton button =  (InsertButton) e.getSource();
 				int col = button.getColumn();
-				//int row = grid.insertCounter(playerTurn, col);//Just for Testing
-				int row = 1;
-				//int winCoordinates[][] = grid.checkForWin(playerTurn);
-				int winCoordinates[][] = new int[4][2];
+				int row = grid.insertCounter(playerTurn, col);
+				//int row = 1;//Just for Testing
+				int winCoordinates[][] = grid.checkForWin(playerTurn);
+				//int winCoordinates[][] = new int[4][2];
 				//int winCoordinates[][] = {{1, 1}, {2, 2}, {3, 3}, {4, 4}};
 				if (row == 6) {
 					button.setEnable(false);
@@ -198,6 +198,12 @@ public class Main {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setLocationRelativeTo(null);
 	}//end main
+	
+	/**
+	   * Creates font
+	   * @param font size
+	   * @return Formated font
+	   */
 	public static Font createFont(int size) {
 		InputStream inputStream = Main.class.getResourceAsStream("GoogleSans-Regular.ttf");
 		try {

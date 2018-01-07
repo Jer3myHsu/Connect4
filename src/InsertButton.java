@@ -1,11 +1,7 @@
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
+import java.awt.*;
+import java.awt.event.*;
 
-import javax.swing.BorderFactory;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
+import javax.swing.*;
 
 public class InsertButton extends JButton implements MouseListener {
     Color textColor = Color.decode("#7F6A00");
@@ -13,7 +9,6 @@ public class InsertButton extends JButton implements MouseListener {
     Color hoverColor = Color.decode("#38E249");
     Color disabledColor = Color.lightGray;
     int column = 0;
-    
     public InsertButton(String str) {
         this.setFocusPainted(false);
         this.setBorderPainted(false);
@@ -24,25 +19,29 @@ public class InsertButton extends JButton implements MouseListener {
         this.setBackground(backgroundColor);
         addMouseListener(this);
     }
-    public InsertButton(ImageIcon image, ImageIcon disabledImage) {//unused
-        this.setFocusPainted(false);
-        this.setDisabledIcon(disabledImage);//This prevents image going grey when disabled
-        this.setIcon(image);
-        this.setBorder(BorderFactory.createEmptyBorder(
-                3, 3, 3, 3)); 
-        this.setForeground(textColor);
-        this.setBackground(backgroundColor);
-        this.setOpaque(false);
-        this.setContentAreaFilled(false);
-        //this.setBorderPainted(false);
-        addMouseListener(this);
-    }
+    
+    /**
+     * Sets column the button corresponds to
+     * @param column as an int
+     * @return void
+     */
     public void setColumn(int column) {
     	this.column = column;
     }
+    
+    /**
+     * Gets column the button corresponds to
+     * @return column as an int
+     */
     public int getColumn() {
     	return column;
     }
+    
+    /**
+     * Custom enable/disable method for buttons
+     * @param boolean to deterine if enabled
+     * @return void
+     */
     public void setEnable(boolean isEnabled) {
     	this.setOpaque(isEnabled);
     	this.setEnabled(isEnabled);
