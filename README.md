@@ -6,9 +6,9 @@ player 2 = 2
 
 Methods Usable from Grid:
 
-insertCounter(int player): int[2] <= Coordinates of counter
+insertCounter(int player, int col): int row <= Coordinates of counter
 
-checkForWin(int player): int[4][2] <= List of coordinates
+checkForWin(int player): int[4][2] <= List of coordinates ex. {{1, 1}, {1, 2}, {1, 3}, {1, 4}}
 
 ## Notes
 
