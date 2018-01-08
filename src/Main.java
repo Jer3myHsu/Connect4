@@ -54,7 +54,7 @@ public class Main {
 				int col = button.getColumn();
 				int row = grid.insertCounter(playerTurn, col);
 				//int row = 1;//Just for Testing
-				int winCoordinates[][] = grid.checkForWin(playerTurn);
+				int winCoordinates[][] = grid.checkForWin(playerTurn, col, row);
 				//int winCoordinates[][] = new int[4][2];
 				//int winCoordinates[][] = {{1, 1}, {2, 2}, {3, 3}, {4, 4}};
 				if (row == 6) {
@@ -114,6 +114,7 @@ public class Main {
 					}
 				}
 				countersUsed = 0;
+				grid.resetGrid();
 			}
 		};
 		ActionListener helpAction = new ActionListener() {

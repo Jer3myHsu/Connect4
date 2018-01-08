@@ -12,13 +12,14 @@ public class Test {
     System.out.println("Item added at row: " + rowNum);
     System.out.println("");
     
-    rowNum = grid.insertCounter(1, 2);
+    rowNum = grid.insertCounter(1, 7);
     System.out.println("Item added at row: " + rowNum);
     System.out.println("");
     
-    rowNum = grid.insertCounter(1, 1);
+    rowNum = grid.insertCounter(1, 7);
     System.out.println("Item added at row: " + rowNum);
     System.out.println("");
+    grid.checkForWin(1, 7, 2);
     
     rowNum = grid.insertCounter(1, 1);
     System.out.println("Item added at row: " + rowNum);
