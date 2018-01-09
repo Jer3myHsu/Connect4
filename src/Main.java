@@ -117,15 +117,20 @@ public class Main {
 		ActionListener helpAction = new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				JOptionPane.showMessageDialog(frame, "Uh I dont feel like typing this",
+				JOptionPane.showMessageDialog(frame, "The objective of the game to get 4 of your"
+				    + " counters in a row.\n"
+				    + "These counters can be vertical, horizontal, or diagonal.\n"
+				    + "Players take turns placing a counter of their colour by pressing the drop button."
+				    + "\n\nGood Luck!",
 						"How to play", JOptionPane.PLAIN_MESSAGE);
 			}
 		};
 		ActionListener aboutAction = new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				JOptionPane.showMessageDialog(frame, "This was created For practice."
-						+ "\nBy Jeremy and Vivian\n2018", "About", JOptionPane.PLAIN_MESSAGE);
+				JOptionPane.showMessageDialog(frame, "This game was created for practice."
+						+ "\n\nBy Jeremy Hsu and Vivian Hsu\nCopyright 2018.", "About",
+						JOptionPane.PLAIN_MESSAGE);
 			}
 		};
 		ActionListener exitAction = new ActionListener() {
