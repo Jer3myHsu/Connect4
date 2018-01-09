@@ -58,10 +58,7 @@ public class Main {
 					button.setEnable(false);
 				}
 				if (winCoordinates[0][0] == 0) {//If ANY Coordinate equal zero then no win
-					if (countersUsed >= (6 * 7)) {
-						turnLabel.setForeground(Color.decode("#7F6A00"));
-						turnLabel.setText("Tie!");
-					} else if (playerTurn == playerOne) {
+					if (playerTurn == playerOne) {
 						counters[row - 1][col - 1].setIcon(redCounter);//subtracts one to convert to array position
 						turnLabel.setForeground(Color.decode("#28A5E8"));
 						turnLabel.setText("It is Blue's Turn");
@@ -73,6 +70,10 @@ public class Main {
 						playerTurn = playerOne;
 					}
 					countersUsed++;
+					if (countersUsed >= (6 * 7)) {
+						turnLabel.setForeground(Color.decode("#7F6A00"));
+						turnLabel.setText("Tie!");
+					}
 				} else {
 					if (playerTurn == playerOne) {
 						for (int i = 0; i < winCoordinates.length; i++) {
