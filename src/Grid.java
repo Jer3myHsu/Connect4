@@ -5,8 +5,6 @@ public class Grid {
 	// p#Counters represents a list of the appropriate player's counter
 	// positions.
 	private int[][] grid = new int[7][6];
-	private ArrayList<int[]> p1Counters = new ArrayList<int[]>();
-	private ArrayList<int[]> p2Counters = new ArrayList<int[]>();
 
 	// FUNCTIONS TO BE USED IN Main.java
 	/**
@@ -17,12 +15,12 @@ public class Grid {
 	 */
 	public int insertCounter(int player, int columnNum) {
 		// Find the first empty row in that column.
-        int[] rows = grid[columnNum-1];
-        int rowNum = 0;
-        while (rows[rowNum] != 0) {
-            rowNum++;
-        }
-        // Add the counter in that position.
+		int[] rows = grid[columnNum-1];
+		int rowNum = 0;
+		while (rows[rowNum] != 0) {
+			rowNum++;
+		}
+		// Add the counter in that position.
 		grid[columnNum-1][rowNum] = player;
 		return rowNum+1;
 	}
@@ -47,16 +45,16 @@ public class Grid {
 		}
 		return list;
 	}
-	
+
 	/**
 	 * Reset the grid for a new game.
 	 */
 	public void resetGrid() {
-	  for (int i = 0; i < grid.length; i++) {
-	    for (int j = 0; j < grid[i].length; j++) {
-	      grid[i][j] = 0;
-	    }
-	  }
+		for (int i = 0; i < grid.length; i++) {
+			for (int j = 0; j < grid[i].length; j++) {
+				grid[i][j] = 0;
+			}
+		}
 	}
 
 	//HELPER FUNCTIONS
@@ -64,47 +62,44 @@ public class Grid {
 	 * Checks vertically for a win for the indicated player.
 	 * @param player The number of the player; either 1 or 2.
 	 * @param columnNum The number of the column from 1-7.
-     * @param rowNum The number of the row from 1-6.
+	 * @param rowNum The number of the row from 1-6.
 	 * @return An array of 4 coordinates.
 	 */
-	private int[][] checkVertical(int player, int columnNum, int rowNum) {
-		int counterNum = 0;
-		int list[][] = new int[4][2];
-		list[counterNum][0] = columnNum;
-		list[counterNum][1] = rowNum;
-		int i = 1;
-		counterNum = 1;
-		try {
-			while (true) {
-				if (grid[columnNum - 1][rowNum - 1 + i] == player) {
-					list[counterNum][0] = columnNum;
-					list[counterNum][1] = rowNum + i;
-					counterNum++;
-					i++;
-				} else {
-					break;
-				}
-				if (counterNum >= 4) {
-					return list;
-				}
-			}
-		} catch (IndexOutOfBoundsException e) {
+	private int getMinNum(int numOne, int numTwo) {
+		if (numOne <= numTwo) {
+			return numOne;
+		} else {
+			return numTwo;
 		}
-		try {
-			while (true) {
-				if (grid[columnNum - 1][rowNum - 1 - i] == player) {
-					list[counterNum][0] = columnNum;
-					list[counterNum][1] = rowNum - i;
-					counterNum++;
-					i++;
-				} else {
-					break;
-				}
+	}
+	private int[][] checkVertical(int player, int columnNum, int rowNum) {
+		int list[][] = new int[4][2];
+		list[0][0] = columnNum;
+		list[0][1] = rowNum;
+		int counterNum = 1;
+		for (int i = 1; i < (grid[columnNum - 1].length - rowNum); i++) {
+			if (grid[columnNum - 1][rowNum - 1 + i] == player) {
+				list[counterNum][0] = columnNum;
+				list[counterNum][1] = rowNum + i;
+				counterNum++;
 				if (counterNum >= 4) {
 					return list;
 				}
+			} else {
+				break;
 			}
-		} catch (IndexOutOfBoundsException e) {
+		}
+		for (int i = 1; i < rowNum; i++) {
+			if (grid[columnNum - 1][rowNum - 1 - i] == player) {
+				list[counterNum][0] = columnNum;
+				list[counterNum][1] = rowNum - i;
+				counterNum++;
+				if (counterNum >= 4) {
+					return list;
+				}
+			} else {
+				break;
+			}
 		}
 		for (int j = 0; j < list.length; j++) {
 			for (int k = 0; k < list[j].length; k++) {
@@ -118,47 +113,37 @@ public class Grid {
 	 * Checks horizontally for a win for the indicated player.
 	 * @param player The number of the player; either 1 or 2.
 	 * @param columnNum The number of the column from 1-7.
-     * @param rowNum The number of the row from 1-6.
+	 * @param rowNum The number of the row from 1-6.
 	 * @return An array of 4 coordinates.
 	 */
 	private int[][] checkHorizontal(int player, int columnNum, int rowNum) {
-		int counterNum = 0;
 		int list[][] = new int[4][2];
-		list[counterNum][0] = columnNum;
-		list[counterNum][1] = rowNum;
-		int i = 1;
-		counterNum = 1;
-		try {
-			while (true) {
-				if (grid[columnNum - 1 + i][rowNum - 1] == player) {
-					list[counterNum][0] = columnNum + i;
-					list[counterNum][1] = rowNum;
-					counterNum++;
-					i++;
-				} else {
-					break;
-				}
+		list[0][0] = columnNum;
+		list[0][1] = rowNum;
+		int counterNum = 1;
+		for (int i = 1; i < (grid.length - columnNum); i++) {
+			if (grid[columnNum - 1 + i][rowNum - 1] == player) {
+				list[counterNum][0] = columnNum + i;
+				list[counterNum][1] = rowNum;
+				counterNum++;
 				if (counterNum >= 4) {
 					return list;
 				}
+			} else {
+				break;
 			}
-		} catch (IndexOutOfBoundsException e) {
 		}
-		try {
-			while (true) {
-				if (grid[columnNum - 1 - i][rowNum - 1] == player) {
-					list[counterNum][0] = columnNum - i;
-					list[counterNum][1] = rowNum;
-					counterNum++;
-					i++;
-				} else {
-					break;
-				}
+		for (int i = 1; i < columnNum; i++) {
+			if (grid[columnNum - 1 - i][rowNum - 1] == player) {
+				list[counterNum][0] = columnNum - i;
+				list[counterNum][1] = rowNum;
+				counterNum++;
 				if (counterNum >= 4) {
 					return list;
 				}
+			} else {
+				break;
 			}
-		} catch (IndexOutOfBoundsException e) {
 		}
 		for (int j = 0; j < list.length; j++) {
 			for (int k = 0; k < list[j].length; k++) {
@@ -172,47 +157,39 @@ public class Grid {
 	 * Checks increase diagonally for a win for the indicated player.
 	 * @param player The number of the player; either 1 or 2.
 	 * @param columnNum The number of the column from 1-7.
-     * @param rowNum The number of the row from 1-6.
+	 * @param rowNum The number of the row from 1-6.
 	 * @return An array of 4 coordinates.
 	 */
 	private int[][] checkIncreaseDiagonal(int player, int columnNum, int rowNum) {
-		int counterNum = 0;
 		int list[][] = new int[4][2];
-		list[counterNum][0] = columnNum;
-		list[counterNum][1] = rowNum;
-		int i = 1;
-		counterNum = 1;
-		try {
-			while (true) {
-				if (grid[columnNum - 1 + i][rowNum - 1 + i] == player) {
-					list[counterNum][0] = columnNum + i;
-					list[counterNum][1] = rowNum + i;
-					counterNum++;
-					i++;
-				} else {
-					break;
-				}
+		list[0][0] = columnNum;
+		list[0][1] = rowNum;
+		int counterNum = 1;
+		int topSpace = getMinNum(grid[columnNum - 1].length - rowNum, grid.length - columnNum);
+		int bottomSpace = getMinNum(rowNum, columnNum);
+		for (int i = 1; i < topSpace; i++) {
+			if (grid[columnNum - 1 + i][rowNum - 1 + i] == player) {
+				list[counterNum][0] = columnNum + i;
+				list[counterNum][1] = rowNum + i;
+				counterNum++;
 				if (counterNum >= 4) {
 					return list;
 				}
+			} else {
+				break;
 			}
-		} catch (IndexOutOfBoundsException e) {
 		}
-		try {
-			while (true) {
-				if (grid[columnNum - 1 - i][rowNum - 1 - i] == player) {
-					list[counterNum][0] = columnNum - i;
-					list[counterNum][1] = rowNum - i;
-					counterNum++;
-					i++;
-				} else {
-					break;
-				}
+		for (int i = 1; i < bottomSpace; i++) {
+			if (grid[columnNum - 1 - i][rowNum - 1 - i] == player) {
+				list[counterNum][0] = columnNum - i;
+				list[counterNum][1] = rowNum - i;
+				counterNum++;
 				if (counterNum >= 4) {
 					return list;
 				}
+			} else {
+				break;
 			}
-		} catch (IndexOutOfBoundsException e) {
 		}
 		for (int j = 0; j < list.length; j++) {
 			for (int k = 0; k < list[j].length; k++) {
@@ -221,52 +198,44 @@ public class Grid {
 		}
 		return list;
 	}
-	
+
 	/**
-     * Checks decrease diagonally for a win for the indicated player.
-     * @param player The number of the player; either 1 or 2.
-     * @param columnNum The number of the column from 1-7.
-     * @param rowNum The number of the row from 1-6.
-     * @return An array of 4 coordinates.
-     */
+	 * Checks decrease diagonally for a win for the indicated player.
+	 * @param player The number of the player; either 1 or 2.
+	 * @param columnNum The number of the column from 1-7.
+	 * @param rowNum The number of the row from 1-6.
+	 * @return An array of 4 coordinates.
+	 */
 	private int[][] checkDecreaseDiagonal(int player, int columnNum, int rowNum) {
-		int counterNum = 0;
 		int list[][] = new int[4][2];
-		list[counterNum][0] = columnNum;
-		list[counterNum][1] = rowNum;
-		int i = 1;
-		counterNum = 1;
-		try {
-			while (true) {
-				if (grid[columnNum - 1 + i][rowNum - 1 - i] == player) {
-					list[counterNum][0] = columnNum + i;
-					list[counterNum][1] = rowNum - i;
-					counterNum++;
-					i++;
-				} else {
-					break;
-				}
+		list[0][0] = columnNum;
+		list[0][1] = rowNum;
+		int counterNum = 1;
+		int topSpace = getMinNum(grid[columnNum - 1].length - rowNum, columnNum);
+		int bottomSpace = getMinNum(rowNum,  grid.length - columnNum);
+		for (int i = 1; i < bottomSpace; i++) {
+			if (grid[columnNum - 1 + i][rowNum - 1 - i] == player) {
+				list[counterNum][0] = columnNum + i;
+				list[counterNum][1] = rowNum - i;
+				counterNum++;
 				if (counterNum >= 4) {
 					return list;
 				}
+			} else {
+				break;
 			}
-		} catch (IndexOutOfBoundsException e) {
 		}
-		try {
-			while (true) {
-				if (grid[columnNum - 1 - i][rowNum - 1 + i] == player) {
-					list[counterNum][0] = columnNum - i;
-					list[counterNum][1] = rowNum + i;
-					counterNum++;
-					i++;
-				} else {
-					break;
-				}
+		for (int i = 1; i < topSpace; i++) {
+			if (grid[columnNum - 1 - i][rowNum - 1 + i] == player) {
+				list[counterNum][0] = columnNum - i;
+				list[counterNum][1] = rowNum + i;
+				counterNum++;
 				if (counterNum >= 4) {
 					return list;
 				}
+			} else {
+				break;
 			}
-		} catch (IndexOutOfBoundsException e) {
 		}
 		for (int j = 0; j < list.length; j++) {
 			for (int k = 0; k < list[j].length; k++) {

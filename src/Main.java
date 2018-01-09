@@ -53,10 +53,7 @@ public class Main {
 				InsertButton button =  (InsertButton) e.getSource();
 				int col = button.getColumn();
 				int row = grid.insertCounter(playerTurn, col);
-				//int row = 1;//Just for Testing
 				int winCoordinates[][] = grid.checkForWin(playerTurn, col, row);
-				//int winCoordinates[][] = new int[4][2];
-				//int winCoordinates[][] = {{1, 1}, {2, 2}, {3, 3}, {4, 4}};
 				if (row == 6) {
 					button.setEnable(false);
 				}
