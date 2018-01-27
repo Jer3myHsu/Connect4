@@ -29,7 +29,7 @@ public class Main {
 		Grid grid = new Grid();
 		JMenuBar menuBar = new JMenuBar();
 		JMenu menu = new JMenu("Game");
-		JMenuItem resetItem = new JMenuItem("Reset");
+		JMenuItem resetItem = new JMenuItem("New Game");
 		JMenuItem exitItem = new JMenuItem("Exit");
 		JMenuItem helpItem = new JMenuItem("How to Play");
 		JMenuItem aboutItem = new JMenuItem("About Connect 4");

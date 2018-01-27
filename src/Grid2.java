@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 
-public class Grid {
+public class Grid2 {
 	// grid represents the playing grid.
 	// p#Counters represents a list of the appropriate player's counter
 	// positions.
@@ -56,6 +56,19 @@ public class Grid {
 		}
 	}
 	//HELPER FUNCTIONS
+	/**
+	 * Gets the smallest number
+	 * @param Number A
+	 * @param Number B
+	 * @return Smallest number A and B.
+	 */
+	private int getMinNum(int numOne, int numTwo) {
+		if (numOne <= numTwo) {
+			return numOne;
+		} else {
+			return numTwo;
+		}
+	}
 	private int[][] toDoubleArray(ArrayList<int[]> arrayList) {
 		int array[][] = new int[arrayList.size()][2];
 		for (int i = 0; i < arrayList.size(); i++) {
@@ -77,36 +90,34 @@ public class Grid {
 		ArrayList<int[]> list = new ArrayList<int[]>();
 		list.add(firstCoordinate);
 		int counterNum = 1;
-		int i = 1;
-		try {
-			while (true) {
-				int coordinate[] = new int[2];
-				if (grid[columnNum - 1][rowNum - 1 + i] == player) {
-					coordinate[0] = columnNum;
-					coordinate[1] = rowNum + i;
-					list.add(coordinate);
-					counterNum++;
-					if (counterNum >= 4) return list;
-				} else break;
-				i++;
+		for (int i = 1; i < (grid[columnNum - 1].length - rowNum); i++) {
+			int coordinate[] = new int[2];
+			if (grid[columnNum - 1][rowNum - 1 + i] == player) {
+				coordinate[0] = columnNum;
+				coordinate[1] = rowNum + i;
+				list.add(coordinate);
+				counterNum++;
+				if (counterNum >= 4) {
+					return list;
+				}
+			} else {
+				break;
 			}
-		} catch (IndexOutOfBoundsException e) {};
-		i = 1;
-		try {
-			while (true) {
-				int coordinate[] = new int[2];
-				if (grid[columnNum - 1][rowNum - 1 - i] == player) {
-					coordinate[0] = columnNum;
-					coordinate[1] = rowNum - i;
-					list.add(coordinate);
-					counterNum++;
-					if (counterNum >= 4) {
-						return list;
-					}
-				} else break;
-				i++;
+		}
+		for (int i = 1; i < rowNum; i++) {
+			int coordinate[] = new int[2];
+			if (grid[columnNum - 1][rowNum - 1 - i] == player) {
+				coordinate[0] = columnNum;
+				coordinate[1] = rowNum - i;
+				list.add(coordinate);
+				counterNum++;
+				if (counterNum >= 4) {
+					return list;
+				}
+			} else {
+				break;
 			}
-		} catch (IndexOutOfBoundsException e) {};
+		}
 		for (int j = 0; j < list.size(); j++) {
 			for (int k = 0; k < list.get(j).length; k++) {
 				list.get(j)[k] = 0;
@@ -126,33 +137,31 @@ public class Grid {
 		ArrayList<int[]> list = new ArrayList<int[]>();
 		list.add(firstCoordinate);
 		int counterNum = 1;
-		int i = 1;
-		try {
-			while (true) {
-				int coordinate[] = new int[2];
-				if (grid[columnNum - 1 + i][rowNum - 1] == player) {
-					coordinate[0] = columnNum + i;
-					coordinate[1] = rowNum;
-					list.add(coordinate);
-					counterNum++;
-				} else break;
-				i++;
+		for (int i = 1; i <= (grid.length - columnNum); i++) {
+			int coordinate[] = new int[2];
+			if (grid[columnNum - 1 + i][rowNum - 1] == player) {
+				coordinate[0] = columnNum + i;
+				coordinate[1] = rowNum;
+				list.add(coordinate);
+				counterNum++;
+			} else {
+				break;
 			}
-		} catch (IndexOutOfBoundsException e) {};
-		i = 1;
-		try {
-			while (true) {
-				int coordinate[] = new int[2];
-				if (grid[columnNum - 1 - i][rowNum - 1] == player) {
-					coordinate[0] = columnNum - i;
-					coordinate[1] = rowNum;
-					list.add(coordinate);
-					counterNum++;
-				} else break;
-				i++;
+		}
+		for (int i = 1; i < columnNum; i++) {
+			int coordinate[] = new int[2];
+			if (grid[columnNum - 1 - i][rowNum - 1] == player) {
+				coordinate[0] = columnNum - i;
+				coordinate[1] = rowNum;
+				list.add(coordinate);
+				counterNum++;
+			} else {
+				break;
 			}
-		} catch (IndexOutOfBoundsException e) {};
-		if (counterNum >= 4) return list;
+		}
+		if (counterNum >= 4) {
+			return list;
+		}
 		for (int j = 0; j < list.size(); j++) {
 			for (int k = 0; k < list.get(j).length; k++) {
 				list.get(j)[k] = 0;
@@ -172,33 +181,33 @@ public class Grid {
 		ArrayList<int[]> list = new ArrayList<int[]>();
 		list.add(firstCoordinate);
 		int counterNum = 1;
-		int i = 1;
-		try {
-			while (true) {
-				int coordinate[] = new int[2];
-				if (grid[columnNum - 1 + i][rowNum - 1 + i] == player) {
-					coordinate[0] = columnNum + i;
-					coordinate[1] = rowNum + i;
-					list.add(coordinate);
-					counterNum++;
-				} else break;
-				i++;
+		int topSpace = getMinNum(grid[columnNum - 1].length - rowNum, grid.length - columnNum);
+		int bottomSpace = getMinNum(rowNum, columnNum);
+		for (int i = 1; i <= topSpace; i++) {
+			int coordinate[] = new int[2];
+			if (grid[columnNum - 1 + i][rowNum - 1 + i] == player) {
+				coordinate[0] = columnNum + i;
+				coordinate[1] = rowNum + i;
+				list.add(coordinate);
+				counterNum++;
+			} else {
+				break;
 			}
-		} catch (IndexOutOfBoundsException e) {};
-		i = 1;
-		try {
-			while (true) {
-				int coordinate[] = new int[2];
-				if (grid[columnNum - 1 - i][rowNum - 1 - i] == player) {
-					coordinate[0] = columnNum - i;
-					coordinate[1] = rowNum - i;
-					list.add(coordinate);
-					counterNum++;
-				} else break;
-				i++;
+		}
+		for (int i = 1; i < bottomSpace; i++) {
+			int coordinate[] = new int[2];
+			if (grid[columnNum - 1 - i][rowNum - 1 - i] == player) {
+				coordinate[0] = columnNum - i;
+				coordinate[1] = rowNum - i;
+				list.add(coordinate);
+				counterNum++;
+			} else {
+				break;
 			}
-		} catch (IndexOutOfBoundsException e) {};
-		if (counterNum >= 4) return list;
+		}
+		if (counterNum >= 4) {
+			return list;
+		}
 		for (int j = 0; j < list.size(); j++) {
 			for (int k = 0; k < list.get(j).length; k++) {
 				list.get(j)[k] = 0;
@@ -218,33 +227,33 @@ public class Grid {
 		ArrayList<int[]> list = new ArrayList<int[]>();
 		list.add(firstCoordinate);
 		int counterNum = 1;
-		int i = 1;
-		try {
-			while (true) {
-				int coordinate[] = new int[2];
-				if (grid[columnNum - 1 + i][rowNum - 1 - i] == player) {
-					coordinate[0] = columnNum + i;
-					coordinate[1] = rowNum - i;
-					list.add(coordinate);
-					counterNum++;
-				} else break;
-				i++;
+		int topSpace = getMinNum(grid[columnNum - 1].length - rowNum, columnNum);
+		int bottomSpace = getMinNum(rowNum,  grid.length - columnNum);
+		for (int i = 1; i < bottomSpace; i++) {
+			int coordinate[] = new int[2];
+			if (grid[columnNum - 1 + i][rowNum - 1 - i] == player) {
+				coordinate[0] = columnNum + i;
+				coordinate[1] = rowNum - i;
+				list.add(coordinate);
+				counterNum++;
+			} else {
+				break;
 			}
-		} catch (IndexOutOfBoundsException e) {};
-		i = 1;
-		try {
-			while (true) {
-				int coordinate[] = new int[2];
-				if (grid[columnNum - 1 - i][rowNum - 1 + i] == player) {
-					coordinate[0] = columnNum - i;
-					coordinate[1] = rowNum + i;
-					list.add(coordinate);
-					counterNum++;
-				} else break;
-				i++;
+		}
+		for (int i = 1; i < topSpace; i++) {
+			int coordinate[] = new int[2];
+			if (grid[columnNum - 1 - i][rowNum - 1 + i] == player) {
+				coordinate[0] = columnNum - i;
+				coordinate[1] = rowNum + i;
+				list.add(coordinate);
+				counterNum++;
+			} else {
+				break;
 			}
-		} catch (IndexOutOfBoundsException e) {};
-		if (counterNum >= 4) return list;
+		}
+		if (counterNum >= 4) {
+			return list;
+		}
 		for (int j = 0; j < list.size(); j++) {
 			for (int k = 0; k < list.get(j).length; k++) {
 				list.get(j)[k] = 0;
