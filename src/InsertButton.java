@@ -4,11 +4,11 @@ import java.awt.event.*;
 import javax.swing.*;
 
 public class InsertButton extends JButton implements MouseListener {
-    Color textColor = Color.decode("#7F6A00");
-    Color backgroundColor = Color.decode("#F2E091");
-    Color hoverColor = Color.decode("#38E249");
-    Color disabledColor = Color.lightGray;
-    int column = 0;
+    private Color textColor = Color.decode("#7F6A00");
+    private Color backgroundColor = Color.decode("#F2E091");
+    private Color hoverColor = Color.decode("#38E249");
+    private Color disabledColor = Color.lightGray;
+    private int column = 0;
     public InsertButton(String str) {
         this.setFocusPainted(false);
         this.setBorderPainted(false);

@@ -3,12 +3,8 @@ import java.awt.event.*;
 import java.io.*;
 
 import javax.swing.*;
-import javax.swing.GroupLayout.Group;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
-
-import javafx.scene.control.RadioButton;
-import javafx.scene.layout.Border;
 
 /* Jeremy Hsu
  * Main
@@ -26,12 +22,13 @@ public class Main {
 		JPanel boardPanel = new JPanel();
 		JPanel counterPanel = new JPanel(new GridLayout(6, 7));
 		JPanel buttonPanel = new JPanel(new GridLayout(1, 7, 10, 10));
-		JDialog dialog = new JDialog();
+		JDialog optionDialog = new JDialog(frame, "Options", true);
 		JPanel mainPanel = new JPanel();
 		JPanel centerPanel = new JPanel();
 		JPanel playerPanel[] = new JPanel[2];
 		playerPanel[0] = new JPanel();
 		playerPanel[1] = new JPanel();
+		JDialog statDialog = new JDialog(frame, "Options", false);
 		//Set layouts for frames/panels
 		boardPanel.setLayout(new OverlayLayout(boardPanel));
 		windowPanel.setLayout(new BoxLayout(windowPanel, BoxLayout.Y_AXIS));
@@ -152,7 +149,8 @@ public class Main {
 		ActionListener optionAction = new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				dialog.setVisible(true);
+				optionDialog.setLocationRelativeTo(frame);
+				optionDialog.setVisible(true);
 			}
 		};
 		ActionListener radioButtonAction[] = new ActionListener[2];
@@ -177,13 +175,13 @@ public class Main {
 			public void actionPerformed(ActionEvent e) {
 				for (int i = 0; i < playerPanel.length; i++) {
 					if (nameField[i].getText().length() == 0 || nameField[i].getText().length() > 10) {
-						JOptionPane.showMessageDialog(dialog, "Sorry, Player names must be between"
+						JOptionPane.showMessageDialog(optionDialog, "Sorry, Player names must be between"
 								+ "\n1 - 10 characters...");
 						return;
 					}
 					for (int j = 0; j < radioButton[i].length; j++) {
 						if (radioButton[0][j].isSelected() && radioButton[1][j].isSelected()) {
-							JOptionPane.showMessageDialog(dialog, "Sorry, Players must have different color counters...");
+							JOptionPane.showMessageDialog(optionDialog, "Sorry, Players must have different color counters...");
 							return;
 						}
 					}
@@ -198,7 +196,13 @@ public class Main {
 					}
 				}
 				reset(turnLabel, counter, grid, gridCounters, insertButton);
-				dialog.dispose();
+				optionDialog.dispose();
+			}
+		};
+		ActionListener statAction = new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+
 			}
 		};
 		//Build Frame
@@ -266,9 +270,6 @@ public class Main {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setLocationRelativeTo(null);
 		//Build Dialog
-		dialog.setTitle("Options");
-		dialog.setModal(true);
-		dialog.setIconImage(null);
 		for (int i = 0; i < playerPanel.length; i++) {
 			playerPanel[i].setBorder(border[i]);
 			nameField[i] = new JTextField();
@@ -294,13 +295,10 @@ public class Main {
 		dialogButton.addActionListener(applyOptAction);
 		mainPanel.add(dialogButton);
 		mainPanel.add(Box.createRigidArea(new Dimension(0,10)));
-		dialog.add(mainPanel);
-		dialog.setResizable(false);
-		dialog.setSize(340, 384);
-		dialog.setLocationRelativeTo(frame);
-
+		optionDialog.add(mainPanel);
+		optionDialog.setResizable(false);
+		optionDialog.setSize(340, 384);
 	}//end main
-
 	/**
 	 * Creates font
 	 * @param font size
@@ -316,6 +314,15 @@ public class Main {
 			return new Font("Comic Sans MS", Font.BOLD, size);
 		}
 	}
+	/**
+	 * Resets Game to beginning state
+	 * @param label Player turn label
+	 * @param counter counter object
+	 * @param grid grid object
+	 * @param gridCounters counter JLabel 
+	 * @param button
+	 * @return void
+	 */
 	public static void reset(JLabel label, Counter counter[], Grid grid, JLabel gridCounters[][], InsertButton button[]) {
 		playerTurn = (int) (Math.random() + 0.5);
 		if (playerTurn == playerOne) {
