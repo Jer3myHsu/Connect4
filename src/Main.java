@@ -6,7 +6,7 @@ import javax.swing.*;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
 
-/* Jeremy Hsu
+/* Jeremy Hsu and Vivian Hsu
  * Main
  * This is where the frame gets built
  */
@@ -28,7 +28,6 @@ public class Main {
 		JPanel playerPanel[] = new JPanel[2];
 		playerPanel[0] = new JPanel();
 		playerPanel[1] = new JPanel();
-		JDialog statDialog = new JDialog(frame, "Options", false);
 		//Set layouts for frames/panels
 		boardPanel.setLayout(new OverlayLayout(boardPanel));
 		windowPanel.setLayout(new BoxLayout(windowPanel, BoxLayout.Y_AXIS));
@@ -73,6 +72,10 @@ public class Main {
 		ActionListener insertAction = new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				if (turnLabel.getText().lastIndexOf('!') == turnLabel.getText().length() - 1) {
+					reset(turnLabel, counter, grid, gridCounters, insertButton);
+					return;
+				}
 				InsertButton button =  (InsertButton) e.getSource();
 				int col = button.getColumn();
 				int row = grid.insertCounter(playerTurn + 1, col);
@@ -109,9 +112,6 @@ public class Main {
 						}
 						turnLabel.setText(counter[playerTwo].getName() + "'s Wins!");
 					}
-					for (int i = 0; i < insertButton.length; i++) {
-						insertButton[i].setEnable(false);
-					}
 				}
 			}
 		};
@@ -136,7 +136,7 @@ public class Main {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				JOptionPane.showMessageDialog(frame, "This game was created for practice."
-						+ "\n\nBy Jeremy Hsu and Vivian Hsu\nCopyright 2018.", "About",
+						+ "\n\nBy Jeremy Hsu and Vivian Hsu\n2018", "About",
 						JOptionPane.PLAIN_MESSAGE);
 			}
 		};
@@ -199,20 +199,8 @@ public class Main {
 				optionDialog.dispose();
 			}
 		};
-		ActionListener statAction = new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-
-			}
-		};
 		//Build Frame
 		frame.setIconImage(new ImageIcon(Main.class.getResource("icon.png")).getImage());
-		/*try {//This probably looks worse
-			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException
-				| UnsupportedLookAndFeelException e1) {
-			e1.printStackTrace();
-		}*/
 		frame.setJMenuBar(menuBar);
 		menuBar.add(gameMenu);
 		menuBar.add(helpMenu);
